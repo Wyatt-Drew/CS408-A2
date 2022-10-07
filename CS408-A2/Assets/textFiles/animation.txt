@@ -1,12 +1,12 @@
-OBJECT 0 ladybug.obj
+OBJECT 0 ladybug
 
-OBJECT 1 ladybug.obj
+OBJECT 1 ladybug
 
-OBJECT 2 ladybug.obj
+OBJECT 2 ladybug
 
-OBJECT 3 ladybug.obj
+OBJECT 3 ladybug
 
-OBJECT 4 spider.obj
+OBJECT 4 spider
 
  
 

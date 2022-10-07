@@ -31,5 +31,21 @@ public class CreateAnimation : MonoBehaviour
         animation.Play(clip.name);
     }
 
+
+    public struct keyFrame
+    {
+        public int objectNum;
+        public int frameNum;
+        public Vector3 vector;
+        public Vector3 rotation;
+        public Vector3 scale;
+    };
+    public struct Object
+    {
+        public string fileName;
+        public keyFrame[] key;
+        public int keyCount;
+    };
+
 }
 
