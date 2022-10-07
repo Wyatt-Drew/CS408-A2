@@ -46,6 +46,7 @@ public class readtxt : MonoBehaviour
                     objects[number].key = emptyKey;//initialize to empty array
                     objects[number].fileName = Data[i + 2];
                     objects[number].keyCount = 0;
+                    //objects[number].objectID = Data[i]
                     i = i + 1;
                 }
                 else
@@ -59,7 +60,7 @@ public class readtxt : MonoBehaviour
             if (Data[i] == "KEYFRAME")
             {
 
-                int.TryParse(Data[i + 1], out var objectNum);
+                int.TryParse(Data[i + 1], out var objectID);
                 int.TryParse(Data[i + 2], out var frameNum);
                 float.TryParse(Data[i + 3], out var px); //p = position
                 float.TryParse(Data[i + 4], out var py);
@@ -73,7 +74,7 @@ public class readtxt : MonoBehaviour
 
                 keys = keys.Concat(emptyKey).ToArray(); //Increase array size by 1
 
-                keys[keyCount].objectNum = objectNum;
+                keys[keyCount].objectID = objectID;
                 keys[keyCount].frameNum = frameNum;
                 keys[keyCount].vector = new Vector3(px, py, pz);
                 keys[keyCount].rotation = new Vector3(rx, ry, rz);
@@ -89,8 +90,8 @@ public class readtxt : MonoBehaviour
         int indexK;
             for (int i = 0; i < keys.Length; i++)
         {
-            indexK = objects[keys[i].objectNum].keyCount;
-            indexO = keys[i].objectNum;
+            indexK = objects[keys[i].objectID].keyCount;
+            indexO = keys[i].objectID;
             objects[indexO].key = objects[indexO].key.Concat(emptyKey).ToArray(); //Increase array size by 1
             objects[indexO].key[indexK] = keys[i];
             objects[indexO].keyCount = objects[indexO].keyCount + 1;
@@ -148,32 +149,15 @@ public class readtxt : MonoBehaviour
             clip.SetCurve("", typeof(Transform), "localScale.x", new AnimationCurve(keyframeXS));
             clip.SetCurve("", typeof(Transform), "localScale.y", new AnimationCurve(keyframeYS));
             clip.SetCurve("", typeof(Transform), "localScale.z", new AnimationCurve(keyframeZS));
-
-
-            // update the clip to a change the red color
-            //curve = AnimationCurve.Linear(0.0f, 1.0f, 2.0f, 0.0f);
-            //clip.SetCurve("", typeof(Material), "_Color.r", curve);
-            // now animate the GameObject
+            //apply animation
             animation.AddClip(clip, clip.name);
             animation.Play(clip.name);
-
-            //GameObject instance = Instantiate(Resources.Load("ladybug", typeof(GameObject))) as GameObject;
-            // GameObject obj = Instantiate(newObject, transform.position, transform.rotation) as GameObject;
         }
     }
-    //void createObject(Object objects2[0])
-    //{
-        //public GameObject projectile;
-        //      
-        //newObject = GameObject.Find("/ladybug");
-        //GameObject obj = Instantiate(newObject, transform.position, transform.rotation) as GameObject;
-        //Renderer renderer = launched.GetComponent<Renderer>();
-    //}
 }
-
     public struct keyFrame
 {
-    public int objectNum;
+    public int objectID;
     public int frameNum;
     public Vector3 vector;
     public Vector3 rotation;
@@ -184,4 +168,8 @@ public struct Object
     public string fileName;
     public keyFrame[] key;
     public int keyCount;
+    public int objectID;
 };
+// update the clip to a change the red color
+//curve = AnimationCurve.Linear(0.0f, 1.0f, 2.0f, 0.0f);
+//clip.SetCurve("", typeof(Material), "_Color.r", curve);
