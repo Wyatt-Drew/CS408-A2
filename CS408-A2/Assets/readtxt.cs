@@ -40,18 +40,18 @@ public class readtxt : MonoBehaviour
         double x = instance.transform.position.x;
         double y = instance.transform.position.y;
         double z = instance.transform.position.z;
-        double xr = instance.transform.rotation.x;
-        double yr = instance.transform.rotation.y;
-        double zr = instance.transform.rotation.z;
+        double xr = instance.transform.rotation.eulerAngles.x;
+        double yr = instance.transform.rotation.eulerAngles.y;
+        double zr = instance.transform.rotation.eulerAngles.z;
         double xs = instance.transform.localScale.x;
         double ys = instance.transform.localScale.y;
         double zs = instance.transform.localScale.z;
         Debug.Log("The real values of the object: " +
             " Object Number: " + objects[i].objectID +
             " Frame number: " + curFrame+
-            " XYZ position: " + vector.x + " " + vector.y + " " + vector.z +
-            " XYZ rotation: " + xr + " " + yr + " " + zr +
-            " XYZ scale: " + xs + " " + ys + " " + zs
+            " XYZ position: " + vector.x + " | " + vector.y + " | " + vector.z +
+            " XYZ rotation: " + xr + " | " + yr + " | " + zr +
+            " XYZ scale: " + xs + " | " + ys + " | " + zs
             );
     }
     public void LogIntended(int i, int curFrame) //i is a loop counter for all objects
@@ -108,9 +108,9 @@ public class readtxt : MonoBehaviour
                 Debug.Log("The intended values from file: " +
                 " Object Number: " + objects[i].objectID +
                 " Frame number: " + curFrame +
-                " XYZ position: " + x + " " + y + " " + z +
-                " XYZ rotation: " + xr + " " + yr + " " + zr +
-                " XYZ scale: " + xs + " " + ys + " " + zs
+                " XYZ position: " + x + " | " + y + " | " + z +
+                " XYZ rotation: " + xr + " | " + yr + " | " + zr +
+                " XYZ scale: " + xs + " | " + ys + " | " + zs
                 );
 
         }
@@ -343,6 +343,26 @@ public class readtxt : MonoBehaviour
             //apply animation
             animation.AddClip(clip, clip.name);
 
+
+            AnimationEvent evnt = new AnimationEvent();
+            //Change Visibility functions
+            instance.AddComponent<ChangeVisibility>(); // add script
+            //Hide when finished
+            evnt.time = objects[i].key[objects[i].keyCount - 1].frameNum/speed;
+            evnt.functionName = "HideEvent";
+            clip.AddEvent(evnt);                   // add event for script
+            //Hide when created
+            if (objects[i].key[0].frameNum > 0f)
+            {
+                evnt.time = 0f;
+                evnt.functionName = "HideEvent";
+                clip.AddEvent(evnt);                   // add event for script
+            }
+            //Unhide when first frame
+            evnt.time = objects[i].key[0].frameNum / speed + 1f;
+                evnt.functionName = "UnhideEvent";
+                clip.AddEvent(evnt);                   // add event for script
+
             //animation[clip.name].speed = 1f;
             animation.Play(clip.name);
 
@@ -353,7 +373,6 @@ public class readtxt : MonoBehaviour
 
         }
     }
-
 }
     public struct keyFrame
 {
@@ -371,6 +390,7 @@ public struct Object
     public int objectID;
     public GameObject instance;
 };
+
 // update the clip to a change the red color
 //curve = AnimationCurve.Linear(0.0f, 1.0f, 2.0f, 0.0f);
 //clip.SetCurve("", typeof(Material), "_Color.r", curve);
