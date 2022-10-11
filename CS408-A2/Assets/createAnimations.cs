@@ -28,6 +28,10 @@ public class createAnimations : MonoBehaviour
             LogReal(i, curFrame);
         }
     }
+    // Purpose:  To identify which objects are visible.
+    // Limitations:  Only works on currently avaiable objects.  If the
+    // object you add is visible via components not listed below it will not be 
+    // flagged as visible.
     public bool isVisible(GameObject instance)
     {
         //General items
