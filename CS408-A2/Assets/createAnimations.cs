@@ -28,21 +28,44 @@ public class createAnimations : MonoBehaviour
             LogReal(i, curFrame);
         }
     }
+    public bool isVisible(GameObject instance)
+    {
+        //General items
+        if (instance.TryGetComponent(out Renderer b1)  && b1.enabled == true)
+            return true;
+
+        //Terrain
+        if (instance.TryGetComponent(out Terrain b2) && b2.enabled == true)
+            return true;
+
+        //Particle systems
+        if (instance.TryGetComponent(out ParticleSystem b3))
+        {
+            var emission = b3.emission;
+            if(emission.enabled == true)
+                return true;
+        }
+        //Children that contain a renderer
+        foreach (Renderer rend in instance.GetComponentsInChildren<Renderer>())
+        {
+            if(rend.enabled == true)
+                return true;
+        }
+        return false;
+    }
     public void LogReal(int i, int curFrame) //i is a loop counter for all objects
     {
         //log the objects real values
         GameObject instance = objects[i].instance;
-        if (instance.GetComponent<Renderer>().enabled == false)
+        if (!isVisible(instance))
         {
             //print the object id, the time, and "Object does not exist".
-            Debug.Log("Object ID: " + objects[i].objectID +
+            Debug.Log("The real values of the object: " + 
+                        "Object ID: " + objects[i].objectID +
                         " Time (frames): " + curFrame +
                         " Object does not exist");
             return;
         }
-
-
-
         Vector3 vector = instance.transform.localPosition;
         double x = instance.transform.position.x;
         double y = instance.transform.position.y;
@@ -71,7 +94,8 @@ public class createAnimations : MonoBehaviour
             if (objects[i].key[0].frameNum > curFrame || objects[i].key[objects[i].keyCount - 1].frameNum < curFrame)
             {
                 //print the object id, the time, and "Object does not exist".
-                Debug.Log("Object ID: " + objects[i].objectID +
+                Debug.Log("The intended values from file: " +
+                            "Object ID: " + objects[i].objectID +
                             " Time (frames): " + curFrame +
                             " Object does not exist");
                 return;

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6889894027909429749}
   - component: {fileID: 6889894027909429746}
   - component: {fileID: 6889894027909429747}
-  - component: {fileID: 2336596255931041919}
+  - component: {fileID: -9135233728449876996}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -85,14 +85,14 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6889894027909429744}
   m_Enabled: 1
---- !u!23 &2336596255931041919
+--- !u!23 &-9135233728449876996
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6889894027909429744}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

@@ -72,12 +72,6 @@ KEYFRAME   5   210    -300    0    -300    0    0    0  1.0  1.0  1.0
 
 KEYFRAME   5   1280    -300    0    -300    0    0    0  1.0  1.0  1.0
 
-EVENT 5 hideTerrain 0
-
-EVENT 5 hideTerrain 1280
-
-EVENT 5 showTerrain 210
-
 OBJECT 6 MainCamera
 
 KEYFRAME   6   0    7    100    7    90    0    0  1.0  1.0  1.0
@@ -95,14 +89,7 @@ KEYFRAME   6   960    12    2    18    0    0    0  1.0  1.0  1.0
 KEYFRAME   6   1040    -1    2    33    0    0    0  1.0  1.0  1.0
 
 
-
 OBJECT 7 sword
-
-EVENT 7 hideParticles 0
-
-EVENT 7 hideParticles 760
-
-EVENT 7 showParticles 210
 
 KEYFRAME   7   210    12    1    20    -90    0    0  2.0  2.0  2.0
 
@@ -139,11 +126,6 @@ KEYFRAME   8   360    6.2    1.5    7.6    0   270    110  0.05  -0.05  0.05
 
 KEYFRAME   8   760    11.2    1.5    18.6    0   270    110  0.05  -0.05  0.05
 
-EVENT 8 hideChildren 0
-
-EVENT 8 hideChildren 760
-
-EVENT 8 showChildren 310
 
 OBJECT 9 handsword
 
@@ -161,12 +143,6 @@ KEYFRAME   9   1080    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
 
 KEYFRAME   9   1280    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
 
-
-EVENT 9 hideChildren 0
-
-EVENT 9 hideChildren 1280
-
-EVENT 9 showChildren 790
 
 OBJECT 10 ted
 
