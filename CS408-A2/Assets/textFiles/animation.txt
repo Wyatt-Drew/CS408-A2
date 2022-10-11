@@ -63,3 +63,113 @@ KEYFRAME   4 160    0    0    0    0    0    0  8.5  8.5  8.5
 KEYFRAME   4 190    0    0    0    0    0    0  8.5  8.5  8.5
 
 KEYFRAME   4 200    0    0    0    0    0    0  9.0  9.0  9.0
+
+EVENT 1 testEvent 100
+
+OBJECT 5 Terrain 
+
+KEYFRAME   5   210    -300    0    -300    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   5   1280    -300    0    -300    0    0    0  1.0  1.0  1.0
+
+EVENT 5 hideTerrain 0
+
+EVENT 5 hideTerrain 1280
+
+EVENT 5 showTerrain 210
+
+OBJECT 6 MainCamera
+
+KEYFRAME   6   0    7    100    7    90    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   210    7    100    7    90    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   310    7    2    7    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   360    7    2    7    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   760    12    2    18    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   960    12    2    18    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   1040    -1    2    33    0    0    0  1.0  1.0  1.0
+
+
+
+OBJECT 7 sword
+
+EVENT 7 hideParticles 0
+
+EVENT 7 hideParticles 760
+
+EVENT 7 showParticles 210
+
+KEYFRAME   7   210    12    1    20    -90    0    0  2.0  2.0  2.0
+
+KEYFRAME   7   260    12    0.1    20    -90    270    0  2.0  2.0  2.0
+
+KEYFRAME   7   310    12    1    20    -90    540    0  2.0  2.0  2.0
+
+KEYFRAME   7   360    12    0.1    20    -90    810    0  2.0  2.0  2.0
+
+KEYFRAME   7   410    12    1    20    -90    1080    0  2.0  2.0  2.0
+
+KEYFRAME   7   460    12    0.1    20    -90    1350    0  2.0  2.0  2.0
+
+KEYFRAME   7   510    12    1    20    -90    1620    0  2.0  2.0  2.0
+
+KEYFRAME   7   560    12    0.1    20    -90    1890    0  2.0  2.0  2.0
+
+KEYFRAME   7   610    12    1    20    -90    2160    0  2.0  2.0  2.0
+
+KEYFRAME   7   660    12    0.1    20    -90    2430    0  2.0  2.0  2.0
+
+
+KEYFRAME   7   710    12    1    20    -90    2700    0  2.0  2.0  2.0
+
+KEYFRAME   7   760    12    0.1    20    -90    2970    0  2.0  2.0  2.0
+
+OBJECT 8 hand
+
+KEYFRAME   8   310    6.2    0    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   330    6.2    1.5    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   360    6.2    1.5    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   760    11.2    1.5    18.6    0   270    110  0.05  -0.05  0.05
+
+EVENT 8 hideChildren 0
+
+EVENT 8 hideChildren 760
+
+EVENT 8 showChildren 310
+
+OBJECT 9 handsword
+
+KEYFRAME   9   790    14.5    1    18    180   260    -40  0.02  -0.02  0.02
+
+KEYFRAME   9   860    14.5    1    18    180   260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   960    14.5    1    18    180   260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   970    13.4    0.43    18.3    134   280    5  0.02  -0.02  0.02
+
+KEYFRAME   9   1040    -0.7   0.43    32.9    134    280    5  0.02  -0.02  0.02
+
+KEYFRAME   9   1080    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   1280    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
+
+
+EVENT 9 hideChildren 0
+
+EVENT 9 hideChildren 1280
+
+EVENT 9 showChildren 790
+
+OBJECT 10 ted
+
+KEYFRAME   10   210    1    2.65    33    -90    180    0  35  35  35
+
+KEYFRAME   10   1080    1    2.65    33    -90    180    0  35  35  35

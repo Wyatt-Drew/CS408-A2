@@ -36,6 +36,17 @@ public class readtxt : MonoBehaviour
     {
         //log the objects real values
         GameObject instance = objects[i].instance;
+        if (instance.GetComponent<Renderer>().enabled == false)
+        {
+            //print the object id, the time, and "Object does not exist".
+            Debug.Log("Object ID: " + objects[i].objectID +
+                        " Time (frames): " + curFrame +
+                        " Object does not exist");
+            return;
+        }
+
+
+
         Vector3 vector = instance.transform.localPosition;
         double x = instance.transform.position.x;
         double y = instance.transform.position.y;
@@ -123,6 +134,9 @@ public class readtxt : MonoBehaviour
     {
         //*********************************************************** reading data *************************************
 
+        eventList[] events = { };
+        eventList event1 = new eventList();
+        eventList[] emptyList = { event1 };
         keyFrame[] keys = { };
         keyFrame keyFrame1 = new keyFrame();
         keyFrame[] emptyKey = { keyFrame1 };
@@ -139,6 +153,7 @@ public class readtxt : MonoBehaviour
         }
         sr.Close();
         int keyCount = 0;
+        int eventCount = 0;
         //parsing Data array into object and keyframe arrays
         for (int i = 0; i < Data.Length; i++)
         {
@@ -149,6 +164,7 @@ public class readtxt : MonoBehaviour
                 if (int.TryParse(Data[i + 1], out var number))
                 {
                     objects[obCount].key = emptyKey;//initialize to empty array
+                    objects[obCount].events = emptyList;
                     objects[obCount].objectID = number; // record item ID
                     objects[obCount].fileName = Data[i + 2];
                     objects[obCount].keyCount = 0;
@@ -188,7 +204,24 @@ public class readtxt : MonoBehaviour
                 keyCount++;
                 i = i + 10;
             }
+            if (Data[i] == "EVENT")
+            {
 
+                int.TryParse(Data[i + 1], out var objectID);
+                string eventName = Data[i + 2];
+                int.TryParse(Data[i + 3], out var frameNum);
+                
+
+                events = events.Concat(emptyList).ToArray(); //Increase array size by 1
+
+                events[eventCount].objectID = objectID;
+                events[eventCount].frameNum = frameNum;
+                events[eventCount].eventName = eventName;
+
+
+                eventCount++;
+                i = i + 2;
+            }
         }
         //for every keyframe find its object and put it in it.  
         int indexO = -1;
@@ -200,7 +233,7 @@ public class readtxt : MonoBehaviour
             {
                 if (keys[i].objectID == objects[j].objectID)
                 {
-                    indexO = keys[i].objectID;
+                    indexO = j;
                     break;
                 }
             }
@@ -208,6 +241,7 @@ public class readtxt : MonoBehaviour
             if (indexO == -1)
             {
                 Debug.Log("Error: Key frame refers to an object that has never been specified.");
+                continue;
             }
             indexK = objects[indexO].keyCount;
             objects[indexO].key = objects[indexO].key.Concat(emptyKey).ToArray(); //Increase array size by 1
@@ -220,6 +254,31 @@ public class readtxt : MonoBehaviour
 
 
             objects[indexO].keyCount = objects[indexO].keyCount + 1;
+        }
+        //for every event find its object and put it in it
+        for (int i = 0; i < events.Length; i++)
+        {
+            indexO = -1;
+            for (int j = 0; j < obCount; j++)
+            {
+                if (events[i].objectID == objects[j].objectID)
+                {
+                    indexO = j;
+                    break;
+                }
+            }
+            // **  Report an error if a key frame refers to an object that has never been specified. **
+            if (indexO == -1)
+            {
+                Debug.Log("Error: Event refers to an object that has never been specified.");
+            }
+            indexK = objects[indexO].eventCount;
+            objects[indexO].events = objects[indexO].events.Concat(emptyList).ToArray(); //Increase array size by 1
+            objects[indexO].events[indexK] = events[i];
+            //No need to name events in order.  Limit of 1 event per frame per object.
+
+
+            objects[indexO].eventCount = objects[indexO].eventCount + 1;
         }
     }
 
@@ -359,9 +418,21 @@ public class readtxt : MonoBehaviour
                 clip.AddEvent(evnt);                   // add event for script
             }
             //Unhide when first frame
-            evnt.time = objects[i].key[0].frameNum / speed + 1f;
+            evnt.time = objects[i].key[0].frameNum / speed;
                 evnt.functionName = "UnhideEvent";
                 clip.AddEvent(evnt);                   // add event for script
+
+            //Dynamically add any more events specified
+            for (int j = 0; j < objects[i].eventCount; j++)
+            {
+                if(j == 0)
+                {
+                    instance.AddComponent<customEvent>(); // add script only once
+                }
+                evnt.functionName = objects[i].events[j].eventName;
+                evnt.time = objects[i].events[j].frameNum/speed;
+                clip.AddEvent(evnt);
+            }
 
             //animation[clip.name].speed = 1f;
             animation.Play(clip.name);
@@ -373,6 +444,12 @@ public class readtxt : MonoBehaviour
 
         }
     }
+}
+public struct eventList
+{
+    public string eventName;
+    public int objectID;
+    public int frameNum;
 }
     public struct keyFrame
 {
@@ -389,6 +466,8 @@ public struct Object
     public int keyCount;
     public int objectID;
     public GameObject instance;
+    public eventList[] events;
+    public int eventCount;
 };
 
 // update the clip to a change the red color
