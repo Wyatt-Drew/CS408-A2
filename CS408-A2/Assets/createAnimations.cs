@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using System.Linq;
 
-public class readtxt : MonoBehaviour
+public class createAnimations : MonoBehaviour
 {
     public GameObject newObject;
     public static Object[] objects = new Object[100];
@@ -18,10 +18,6 @@ public class readtxt : MonoBehaviour
         Application.targetFrameRate = 60;
         ReadTextFile();
         CreateAnimations();
-    }
-    void Start()
-    {
-
     }
     void LateUpdate()
     {
