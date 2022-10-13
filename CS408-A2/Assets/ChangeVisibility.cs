@@ -11,6 +11,8 @@ public class ChangeVisibility : MonoBehaviour
         if (TryGetComponent(out Renderer b1))
             this.GetComponent<Renderer>().enabled = false;
 
+        //Creative Feature *************************************
+
         //Terrain
         if (TryGetComponent(out Terrain b2))
             this.GetComponent<Terrain>().enabled = false;

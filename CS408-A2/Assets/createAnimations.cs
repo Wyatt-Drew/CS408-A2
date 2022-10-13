@@ -19,7 +19,7 @@ public class createAnimations : MonoBehaviour
         ReadTextFile();
         CreateAnimations();
     }
-    void LateUpdate()  // Late update helps syncronize all the animations and 
+    void Update()  // Late update helps syncronize all the animations and 
     {
         int curFrame = Time.frameCount - 2; //Playing an animation on frame 0 results in it starting on frame 1.
         if (curFrame < 0) { return; }       //Additionally we are closer to the next frame than the current one b/c of LateUpdate()
@@ -30,10 +30,19 @@ public class createAnimations : MonoBehaviour
             LogReal(i, curFrame);
         }
     }
+    //Purpose: to force unity frames to match event frames.
     public void forceStutter(int i, int curFrame)
     {
-        Animation animation = objects[i].instance.GetComponent<Animation>();
-        animation[""].time = curFrame/60f;
+        //This loop is just to prevent double event calls.  We will tollerate the possibility of stuttering if an event is happening.
+        //We will tollerate double hide and double unhide events because they have no change.
+        for (int j = 0; j < objects[i].eventCount; j++) 
+        {
+            if (objects[i].events[j].frameNum != curFrame)
+            {
+                Animation animation = objects[i].instance.GetComponent<Animation>();
+                animation[""].time = curFrame / 60f;
+            }
+        }
     }
     // Purpose:  To identify which objects are visible.
     // Limitations:  Only works on currently avaiable objects.  If the
@@ -454,6 +463,7 @@ public class createAnimations : MonoBehaviour
                 evnt.functionName = "UnhideEvent";
                 clip.AddEvent(evnt);                   // add event for script
 
+            //Creative Feature *************************************
             //Dynamically add any more events specified
             for (int j = 0; j < objects[i].eventCount; j++)
             {
