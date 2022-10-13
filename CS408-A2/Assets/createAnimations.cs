@@ -19,14 +19,21 @@ public class createAnimations : MonoBehaviour
         ReadTextFile();
         CreateAnimations();
     }
-    void LateUpdate()
+    void LateUpdate()  // Late update helps syncronize all the animations and 
     {
-        int curFrame = Time.frameCount - 1;//Unity animation starts on frame 0.  The game has only frame 1.
-        for (int i = 0; i < obCount; i++)
+        int curFrame = Time.frameCount - 2; //Playing an animation on frame 0 results in it starting on frame 1.
+        if (curFrame < 0) { return; }       //Additionally we are closer to the next frame than the current one b/c of LateUpdate()
+        for (int i = 0; i < obCount; i++)   
         {
-            LogIntended(i, curFrame);
+            forceStutter(i, curFrame);  //As per project requirements, we should really play every frame even if it makes it less smooth.
+            LogIntended(i, curFrame);  
             LogReal(i, curFrame);
         }
+    }
+    public void forceStutter(int i, int curFrame)
+    {
+        Animation animation = objects[i].instance.GetComponent<Animation>();
+        animation[""].time = curFrame/60f;
     }
     // Purpose:  To identify which objects are visible.
     // Limitations:  Only works on currently avaiable objects.  If the
@@ -81,7 +88,7 @@ public class createAnimations : MonoBehaviour
         double ys = instance.transform.localScale.y;
         double zs = instance.transform.localScale.z;
         Debug.Log("The real values of the object: " +
-            " Object Number: " + objects[i].objectID +
+            " Object ID: " + objects[i].objectID +
             " Frame number: " + curFrame+
             " XYZ position: " + vector.x + " | " + vector.y + " | " + vector.z +
             " XYZ rotation: " + xr + " | " + yr + " | " + zr +
@@ -141,7 +148,7 @@ public class createAnimations : MonoBehaviour
             double zs = objects[i].key[preFrame].scale.y + (objects[i].key[postFrame].scale.z - objects[i].key[preFrame].scale.z) * progressRatio;
 
                 Debug.Log("The intended values from file: " +
-                " Object Number: " + objects[i].objectID +
+                " Object ID: " + objects[i].objectID +
                 " Frame number: " + curFrame +
                 " XYZ position: " + x + " | " + y + " | " + z +
                 " XYZ rotation: " + xr + " | " + yr + " | " + zr +
@@ -437,9 +444,10 @@ public class createAnimations : MonoBehaviour
             //Hide when created
             if (objects[i].key[0].frameNum > 0f)
             {
-                evnt.time = 0f;
-                evnt.functionName = "HideEvent";
-                clip.AddEvent(evnt);                   // add event for script
+                instance.GetComponent<ChangeVisibility>().HideEvent();
+                //evnt.time = 0f;
+                //evnt.functionName = "HideEvent";
+                //clip.AddEvent(evnt);                   // add event for script
             }
             //Unhide when first frame
             evnt.time = objects[i].key[0].frameNum / speed;
