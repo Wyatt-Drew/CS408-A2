@@ -35,6 +35,7 @@ public class createAnimations : MonoBehaviour
     {
         //This loop is just to prevent double event calls.  We will tollerate the possibility of stuttering if an event is happening.
         //We will tollerate double hide and double unhide events because they have no change.
+        //&& objects[i].key[0].frameNum != curFrame && objects[i].key[objects[i].keyCount-1].frameNum != curFrame
         for (int j = 0; j < objects[i].eventCount; j++) 
         {
             if (objects[i].events[j].frameNum != curFrame)
@@ -182,7 +183,8 @@ public class createAnimations : MonoBehaviour
         keyFrame[] emptyKey = { keyFrame1 };
         string[] Data = { };
         string[] Splitted = { };
-        string path = "Assets/textFiles/animation.txt";
+        //string path = "Assets/textFiles/animation.txt";
+        string path = Application.streamingAssetsPath + "/animation.txt";
         StreamReader sr = new StreamReader(path);
         //read all data into Data array
         for (int i = 0; !sr.EndOfStream; i++)
