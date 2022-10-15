@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System;
 using System.Linq;
+using UnityEngine.Networking;
 
 public class createAnimations : MonoBehaviour
 {
@@ -12,12 +13,27 @@ public class createAnimations : MonoBehaviour
     public static Object[] objects = new Object[100];
     public static int obCount = 0;
     public static int frameCount = 0;
-
+    public static string webInfo;
+    public static string[] Data = { };
+    public static string[] Splitted = { };
+    public static bool isOpenGL;
+    public static string fileName = "animation.txt";
+    public static string urlName = "https://wyatt-drew.github.io/AnimationFromText/StreamingAssets/animation.txt";
     void Awake()
     {
+        isOpenGL = (SystemInfo.graphicsDeviceVersion.StartsWith("OpenGL"));
+        webInfo = "";
         Application.targetFrameRate = 60;
-        ReadTextFile();
-        CreateAnimations();
+        if (isOpenGL)
+        {
+            //creative feature ***************
+            ReadWebInput();
+        }
+        else
+        {
+            ReadTextFile();
+            CreateAnimations();
+        }
     }
     void Update()  // Late update helps syncronize all the animations and 
     {
@@ -171,6 +187,23 @@ public class createAnimations : MonoBehaviour
             Debug.Log("No keyframes present");
         }
     }
+    //creative feature ***************
+    static IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(uri))
+        {
+            yield return request.SendWebRequest();
+            webInfo = request.downloadHandler.text;
+            ReadTextFile();
+            CreateAnimations();
+        }
+    }
+    //creative feature ***************
+    public static void ReadWebInput()
+    {
+        var coInstance = FindObjectOfType<createAnimations>();
+        coInstance.StartCoroutine(GetRequest(urlName));
+    }
     public static void ReadTextFile()
     {
         //*********************************************************** reading data *************************************
@@ -181,19 +214,31 @@ public class createAnimations : MonoBehaviour
         keyFrame[] keys = { };
         keyFrame keyFrame1 = new keyFrame();
         keyFrame[] emptyKey = { keyFrame1 };
-        string[] Data = { };
-        string[] Splitted = { };
         //string path = "Assets/textFiles/animation.txt";
-        string path = Application.streamingAssetsPath + "/animation.txt";
-        StreamReader sr = new StreamReader(path);
+        string path = Application.streamingAssetsPath + "/" + fileName;
         //read all data into Data array
-        for (int i = 0; !sr.EndOfStream; i++)
+        if (isOpenGL) //creative feature ***************
         {
-            string line = sr.ReadLine();
-            Splitted = line.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            Splitted = webInfo.Split(new char[] { '\n', ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+            Splitted = Splitted.Where(Splitted => !string.IsNullOrWhiteSpace(Splitted)).ToArray();
             Data = Data.Concat(Splitted).ToArray();
         }
-        sr.Close();
+        else
+        {
+            StreamReader sr = new StreamReader(path);
+            for (int i = 0; !sr.EndOfStream; i++)
+            {
+                string line = sr.ReadLine();
+                Splitted = line.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+                Data = Data.Concat(Splitted).ToArray();
+
+            }
+            sr.Close();
+
+        }
+        for (int u = 0; u < Data.Length; u++)
+            Data[u] = Data[u].Trim();
         int keyCount = 0;
         int eventCount = 0;
         //parsing Data array into object and keyframe arrays
@@ -387,6 +432,7 @@ public class createAnimations : MonoBehaviour
         {
             //create an instance and save it
             GameObject instance = Instantiate(Resources.Load(objects[i].fileName, typeof(GameObject))) as GameObject;
+
             objects[i].instance = instance;
             Animation animation = instance.AddComponent<Animation>() as Animation;
             // create a new AnimationClip
@@ -428,6 +474,7 @@ public class createAnimations : MonoBehaviour
                 keyframeZS[j] = new Keyframe(objects[i].key[j].frameNum / speed, objects[i].key[j].scale.z);
 
             }
+            //Transformations applied in the requested order:
             //xyz
             clip.SetCurve("", typeof(Transform), "localPosition.x", linear(new AnimationCurve(keyframeX)));
             clip.SetCurve("", typeof(Transform), "localPosition.y", linear(new AnimationCurve(keyframeY)));
@@ -456,9 +503,6 @@ public class createAnimations : MonoBehaviour
             if (objects[i].key[0].frameNum > 0f)
             {
                 instance.GetComponent<ChangeVisibility>().HideEvent();
-                //evnt.time = 0f;
-                //evnt.functionName = "HideEvent";
-                //clip.AddEvent(evnt);                   // add event for script
             }
             //Unhide when first frame
             evnt.time = objects[i].key[0].frameNum / speed;
