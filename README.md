@@ -1,3 +1,3 @@
 # CS408-A2
 
-Please see Creative Features for instructions.
+Github username: Wyatt-Drew How to run animation: All instructions are contained in Creative.pdf
