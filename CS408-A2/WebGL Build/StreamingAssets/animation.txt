@@ -1,0 +1,334 @@
+OBJECT 0 ladybug ANIMATION 1
+
+OBJECT 1 ladybug3 ANIMATION 1
+
+OBJECT 2 spider3 ANIMATION 1
+
+OBJECT 3 ladybug ANIMATION 1
+
+OBJECT 4 spider ANIMATION 1
+
+OBJECT 23 MainCamera ANIMATION 1
+
+EVENT 23 useThisCamera 0
+
+KEYFRAME   23   0    7    100    7    90    0    0  1.0  1.0  1.0
+
+KEYFRAME   23   210    7    100    7    90    0    0  1.0  1.0  1.0
+
+
+
+KEYFRAME   0   0   75   30    0    0    0    0  5.0  5.0  5.0
+
+KEYFRAME   0  90   30   25  -30    0   20    0  5.0  5.0  5.0
+
+KEYFRAME   0 150    0    0    7.5  0   30    0  5.0  5.0  5.0
+
+ 
+
+KEYFRAME   1   0   75  -15  -40    0    0    0  5.0  5.0  5.0
+
+KEYFRAME   1  60   75  -15  -40    0   40    0  5.0  5.0  5.0
+
+KEYFRAME   1 130   40  -10  -30    0   80    0  5.0  5.0  5.0
+
+KEYFRAME   1 160   10  -20  -20    0  120    0  5.0  5.0  5.0
+
+KEYFRAME   1 190    0    0    8.5  0  160    0  5.0  5.0  5.0
+
+ 
+
+KEYFRAME   2   0  -50  -35  -60    0    0   10  5.0  5.0  5.0
+
+KEYFRAME   2  60  -10  -20  -30    0    0   55  5.0  5.0  5.0
+
+KEYFRAME   2  80    0    0    6.0  0    0   70  5.0  5.0  5.0
+
+ 
+
+KEYFRAME   3   0  -50   35  -40    0    0    0  5.0  5.0  5.0
+
+KEYFRAME   3  60  -30    5  -20    0    0  160  5.0  5.0  5.0
+
+KEYFRAME   3 120    0    0    7.0  0    0    0  5.0  5.0  5.0
+
+ 
+
+KEYFRAME   4   0    0    0    0    0    0    0  6.0  6.0  6.0
+
+KEYFRAME   4  80    0    0    0    0    0    0  6.0  6.0  6.0
+
+KEYFRAME   4  90    0    0    0    0    0    0  7.0  7.0  7.0
+
+KEYFRAME   4 120    0    0    0    0    0    0  7.0  7.0  7.0
+
+KEYFRAME   4 130    0    0    0    0    0    0  8.0  8.0  8.0
+
+KEYFRAME   4 150    0    0    0    0    0    0  8.0  8.0  8.0
+
+KEYFRAME   4 160    0    0    0    0    0    0  8.5  8.5  8.5
+
+KEYFRAME   4 190    0    0    0    0    0    0  8.5  8.5  8.5
+
+KEYFRAME   4 200    0    0    0    0    0    0  9.0  9.0  9.0
+
+EVENT 22 testEvent 100
+
+OBJECT 5 Terrain ANIMATION 0
+
+EVENT 5 playMusic 0
+
+EVENT 5 playMusic 1070
+
+KEYFRAME   5   0    -300    0    -300    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   5   1070    -300    0    -300    0    0    0  1.0  1.0  1.0
+
+OBJECT 6 MainCamera ANIMATION 0
+
+EVENT 6 useThisCamera 0
+
+KEYFRAME   6   0    7    100    7    90    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   100    7    2    7    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   150    7    2    7    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   550    12    2    18    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   750    12    2    18    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   830    -1    2    33    0    0    0  1.0  1.0  1.0
+
+KEYFRAME   6   1070    -1    2    33    0    0    0  1.0  1.0  1.0
+
+
+OBJECT 7 sword ANIMATION 0
+
+KEYFRAME   7   0    12    1    20    -90    0    0  2.0  2.0  2.0
+
+KEYFRAME   7   50    12    0.1    20    -90    270    0  2.0  2.0  2.0
+
+KEYFRAME   7   100    12    1    20    -90    540    0  2.0  2.0  2.0
+
+KEYFRAME   7   150    12    0.1    20    -90    810    0  2.0  2.0  2.0
+
+KEYFRAME   7   200    12    1    20    -90    1080    0  2.0  2.0  2.0
+
+KEYFRAME   7   250    12    0.1    20    -90    1350    0  2.0  2.0  2.0
+
+KEYFRAME   7   300    12    1    20    -90    1620    0  2.0  2.0  2.0
+
+KEYFRAME   7   350    12    0.1    20    -90    1890    0  2.0  2.0  2.0
+
+KEYFRAME   7   400    12    1    20    -90    2160    0  2.0  2.0  2.0
+
+KEYFRAME   7   450    12    0.1    20    -90    2430    0  2.0  2.0  2.0
+
+
+KEYFRAME   7   500    12    1    20    -90    2700    0  2.0  2.0  2.0
+
+KEYFRAME   7   550    12    0.1    20    -90    2970    0  2.0  2.0  2.0
+
+OBJECT 8 hand ANIMATION 0
+
+KEYFRAME   8   100    6.2    0    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   120    6.2    1.5    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   150    6.2    1.5    7.6    0   270    110  0.05  -0.05  0.05
+
+KEYFRAME   8   550    11.2    1.5    18.6    0   270    110  0.05  -0.05  0.05
+
+
+OBJECT 9 handsword ANIMATION 0
+
+KEYFRAME   9   580    14.5    1    18    180   260    -40  0.02  -0.02  0.02
+
+KEYFRAME   9   650    14.5    1    18    180   260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   750    14.5    1    18    180   260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   760    13.4    0.43    18.3    134   280    5  0.02  -0.02  0.02
+
+KEYFRAME   9   830    -0.7   0.43    32.9    134    280    5  0.02  -0.02  0.02
+
+KEYFRAME   9   870    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
+
+KEYFRAME   9   1070    1.69   1    33.3    180    260    11  0.02  -0.02  0.02
+
+
+OBJECT 10 ted ANIMATION 0
+
+KEYFRAME   10   0    1    2.65    33    -90    180    0  35  35  35
+
+KEYFRAME   10   870    1    2.65    33    -90    180    0  35  35  35
+
+OBJECT 11 house ANIMATION 0
+
+KEYFRAME   11   0    12    1    83.6    -90    0    0  100  100  100
+
+KEYFRAME   11   1070    12    1    83.6    -90    0    0  100  100  100
+
+OBJECT 12 ruby ANIMATION 0
+
+KEYFRAME   12   0    12    5.4    74    -270    -270    0  2  2  2
+
+KEYFRAME   12   60    12    6.4    74    -180    -180    0  2  2  2
+
+KEYFRAME   12   110    12    5.4    74    -90    -90    0  2  2  2
+
+KEYFRAME   12   160    12    6.4    74    0    0    0  2  2  2
+
+KEYFRAME   12   210    12    5.4    74    90    90    0  2  2  2
+
+KEYFRAME   12   260    12    6.4    74    180    180    0  2  2  2
+
+KEYFRAME   12   310    12    5.4    74    270    270    0  2  2  2
+
+KEYFRAME   12   360    12    6.4    74    360    360    0  2  2  2
+
+KEYFRAME   12   410    12    5.4    74    450    450    0  2  2  2
+
+KEYFRAME   12   460    12    6.4    74    360    540    0  2  2  2
+
+KEYFRAME   12   510    12    5.4    74    270    630    0  2  2  2
+
+KEYFRAME   12   560    12    6.4    74    180    720    0  2  2  2
+
+KEYFRAME   12   610    12    5.4    74    90    810    0  2  2  2
+
+KEYFRAME   12   760    12    6.4    74    0    900    0  2  2  2
+
+KEYFRAME   12   810    12    5.4    74    90    990    0  2  2  2
+
+KEYFRAME   12   960    12    6.4    74    180    1080    0  2  2  2
+
+KEYFRAME   12   1010    12    5.4    74    270    1170    0  2  2  2
+
+KEYFRAME   12   1070    12    6.4    74    360    1260    0  2  2  2
+
+OBJECT 13 emerald ANIMATION 0
+
+KEYFRAME   13   0    12    5.4    74    -270    -270    0  2  2  2
+
+KEYFRAME   13   60    12    6.4    74    -180    -180    0  2  2  2
+
+KEYFRAME   13   110    12    5.4    74    -90    -90    0  2  2  2
+
+KEYFRAME   13   160    12    6.4    74    0    0    0  2  2  2
+
+KEYFRAME   13   210    7.5    5.4    74    90    90    0  2  2  2
+
+KEYFRAME   13   260    7.5    6.4    74    180    180    0  2  2  2
+
+KEYFRAME   13   310    7.5    5.4    74    270    270    0  2  2  2
+
+KEYFRAME   13   360    7.5    6.4    74    360    360    0  2  2  2
+
+KEYFRAME   13   410    7.5    5.4    74    450    450    0  2  2  2
+
+KEYFRAME   13   460    7.5    6.4    74    360    540    0  2  2  2
+
+KEYFRAME   13   510    7.5    5.4    74    270    630    0  2  2  2
+
+KEYFRAME   13   560    7.5    6.4    74    180    720    0  2  2  2
+
+KEYFRAME   13   610    7.5    5.4    74    90    810    0  2  2  2
+
+KEYFRAME   13   760    7.5    6.4    74    0    900    0  2  2  2
+
+KEYFRAME   13   810    7.5    5.4    74    90    990    0  2  2  2
+
+KEYFRAME   13   960    7.5    6.4    74    180    1080    0  2  2  2
+
+KEYFRAME   13   1010    7.5    5.4    74    270    1170    0  2  2  2
+
+KEYFRAME   13   1070    7.5    6.4    74    360    1260    0  2  2  2
+
+
+OBJECT 14 saphire ANIMATION 0
+
+KEYFRAME   14   0    12    5.4    74    -270    -270    0  2  2  2
+
+KEYFRAME   14   60    12    6.4    74    -180    -180    0  2  2  2
+
+KEYFRAME   14   110    12    5.4    74    -90    -90    0  2  2  2
+
+KEYFRAME   14   160    12    6.4    74    0    0    0  2  2  2
+
+KEYFRAME   14   210    16.5    5.4    74    90    90    0  2  2  2
+
+KEYFRAME   14   260    16.5    6.4    74    180    180    0  2  2  2
+
+KEYFRAME   14   310    16.5    5.4    74    270    270    0  2  2  2
+
+KEYFRAME   14   360    16.5    6.4    74    360    360    0  2  2  2
+
+KEYFRAME   14   410    16.5    5.4    74    450    450    0  2  2  2
+
+KEYFRAME   14   460    16.5    6.4    74    360    540    0  2  2  2
+
+KEYFRAME   14   510    16.5    5.4    74    270    630    0  2  2  2
+
+KEYFRAME   14   560    16.5    6.4    74    180    720    0  2  2  2
+
+KEYFRAME   14   610    16.5    5.4    74    90    810    0  2  2  2
+
+KEYFRAME   14   760    16.5    6.4    74    0    900    0  2  2  2
+
+KEYFRAME   14   810    16.5    5.4    74    90    990    0  2  2  2
+
+KEYFRAME   14   960    16.5    6.4    74    180    1080    0  2  2  2
+
+KEYFRAME   14   1010    16.5    5.4    74    270    1170    0  2  2  2
+
+KEYFRAME   14   1070    16.5    6.4    74    360    1260    0  2  2  2
+
+OBJECT 15 wall ANIMATION 0
+
+KEYFRAME   15   0    12    -0.39    9.45    0    0    90  0.8  12.3  18.6
+
+KEYFRAME   15   1070    12    -0.39    9.45    0    0    90  0.8  12.3  18.6
+
+OBJECT 16 wall ANIMATION 0
+
+KEYFRAME   16  0    12    -0.39    -9    0    0    90  0.8  12.3  18.6
+
+KEYFRAME   16   1070    12    -0.39    -9    0    0    90  0.8  12.3  18.6
+
+OBJECT 17 wall ANIMATION 0
+
+KEYFRAME   17  0    12    -0.39    -27.45    0    0    90  0.8  12.3  18.6
+
+KEYFRAME   17   1070    12    -0.39    -27.45    0    0    90  0.8  12.3  18.6
+
+OBJECT 18 wall ANIMATION 0
+
+KEYFRAME   18  0    12    -0.39    -45.9    0    0    90  0.8  12.3  18.6
+
+KEYFRAME   18   1070    12    -0.39    -45.9    0    0    90  0.8  12.3  18.6
+
+OBJECT 19 wall ANIMATION 0
+
+KEYFRAME   19  0    -47.4    7    34    0    90    0  7  13  80
+
+KEYFRAME   19  1070    -47.4    7    34    0    90    0  7  13  80
+
+OBJECT 20 wall ANIMATION 0
+
+KEYFRAME   20  0    71.5    7    34    0    90    0  7  13  80
+
+KEYFRAME   20  1070    71.5    7    34    0    90    0  7  13  80
+
+OBJECT 21 wall ANIMATION 0
+
+KEYFRAME   21  0    -83    7    -11    0    0    0  7  13  80
+
+KEYFRAME   21  1070    -83    7    -11    0    0    0  7  13  80
+
+OBJECT 22 wall ANIMATION 0
+
+KEYFRAME   22  0    107    7    -11    0    0    0  7  13  80
+
+KEYFRAME   22  1070    107    7    -11    0    0    0  7  13  80
