@@ -19,8 +19,15 @@ public class createAnimations : MonoBehaviour
     public static bool isOpenGL;
     public static string fileName = "animation.txt";
     public static string urlName = "https://wyatt-drew.github.io/AnimationFromText/StreamingAssets/animation.txt";
+    //
+    private bool isMenu = true;
+    private int endFrame;
+    private int startFrame;
+    private disableCanvas disableCanvas;
+    public Animator animator;
     void Awake()
     {
+        disableCanvas = FindObjectOfType<disableCanvas>();
         isOpenGL = (SystemInfo.graphicsDeviceVersion.StartsWith("OpenGL"));
         webInfo = "";
         Application.targetFrameRate = 60;
@@ -37,14 +44,51 @@ public class createAnimations : MonoBehaviour
     }
     void Update()  // Late update helps syncronize all the animations and 
     {
-        int curFrame = Time.frameCount - 2; //Playing an animation on frame 0 results in it starting on frame 1.
-        if (curFrame < 0) { return; }       //Additionally we are closer to the next frame than the current one b/c of LateUpdate()
-        for (int i = 0; i < obCount; i++)   
+        if (isMenu)
         {
-            forceStutter(i, curFrame);  //As per project requirements, we should really play every frame even if it makes it less smooth.
-            LogIntended(i, curFrame);  
-            LogReal(i, curFrame);
+            return;
         }
+
+        int curFrame = Time.frameCount;
+        Debug.Log("Cur" + curFrame + "end" + endFrame);
+        if (curFrame >= endFrame)
+        {
+            isMenu = true;
+            disableCanvas.toggleMenu(true);
+            //return;
+        }
+        //if (curFrame < 0) { return; }       //Additionally we are closer to the next frame than the current one b/c of LateUpdate()
+        //for (int i = 0; i < obCount; i++)   
+        //{
+        //forceStutter(i, curFrame);  //As per project requirements, we should really play every frame even if it makes it less smooth.
+        //LogIntended(i, curFrame);  
+        //LogReal(i, curFrame);
+        //}
+    }
+    public void selectAnimation(int option)
+    {
+        isMenu = false;
+        disableCanvas.toggleMenu(false);
+        for (int i = 0; i < obCount; i++)
+        {
+            if (objects[i].animationNum == option)
+            {
+                objects[i].instance.GetComponent<Animation>().Play("");
+            }
+            else
+            {
+                objects[i].instance.GetComponent<ChangeVisibility>().HideEvent();
+            }
+        }
+        if (option == 1)
+        {
+            endFrame = 210 + Time.frameCount;
+        }
+        if (option == 0)
+        {
+            endFrame = 1070 + Time.frameCount;
+        }
+        return;
     }
     //Purpose: to force unity frames to match event frames.
     public void forceStutter(int i, int curFrame)
@@ -52,12 +96,16 @@ public class createAnimations : MonoBehaviour
         //This loop is just to prevent double event calls.  We will tollerate the possibility of stuttering if an event is happening.
         //We will tollerate double hide and double unhide events because they have no change.
         //&& objects[i].key[0].frameNum != curFrame && objects[i].key[objects[i].keyCount-1].frameNum != curFrame
-        for (int j = 0; j < objects[i].eventCount; j++) 
+        for (int j = 0; j < objects[i].eventCount; j++)
         {
             if (objects[i].events[j].frameNum != curFrame)
             {
-                Animation animation = objects[i].instance.GetComponent<Animation>();
-                animation[""].time = curFrame / 60f;
+                //Animation animation = objects[i].instance.GetComponent<Animation>();
+                Animation animation2 = objects[i].instance.GetComponent<Animation>();
+                animation2[""].time = 0f;
+                //animation[""].time = curFrame / 60f;
+                //animation[""].time = curFrame;
+                //animator.Play(animation[""], 0, (1 / 1280) * curFrame);
             }
         }
     }
@@ -68,7 +116,7 @@ public class createAnimations : MonoBehaviour
     public bool isVisible(GameObject instance)
     {
         //General items
-        if (instance.TryGetComponent(out Renderer b1)  && b1.enabled == true)
+        if (instance.TryGetComponent(out Renderer b1) && b1.enabled == true)
             return true;
 
         //Terrain
@@ -79,13 +127,13 @@ public class createAnimations : MonoBehaviour
         if (instance.TryGetComponent(out ParticleSystem b3))
         {
             var emission = b3.emission;
-            if(emission.enabled == true)
+            if (emission.enabled == true)
                 return true;
         }
         //Children that contain a renderer
         foreach (Renderer rend in instance.GetComponentsInChildren<Renderer>())
         {
-            if(rend.enabled == true)
+            if (rend.enabled == true)
                 return true;
         }
         return false;
@@ -97,7 +145,7 @@ public class createAnimations : MonoBehaviour
         if (!isVisible(instance))
         {
             //print the object id, the time, and "Object does not exist".
-            Debug.Log("The real values of the object: " + 
+            Debug.Log("The real values of the object: " +
                         "Object ID: " + objects[i].objectID +
                         " Time (frames): " + curFrame +
                         " Object does not exist");
@@ -115,7 +163,7 @@ public class createAnimations : MonoBehaviour
         double zs = instance.transform.localScale.z;
         Debug.Log("The real values of the object: " +
             " Object ID: " + objects[i].objectID +
-            " Frame number: " + curFrame+
+            " Frame number: " + curFrame +
             " XYZ position: " + vector.x + " | " + vector.y + " | " + vector.z +
             " XYZ rotation: " + xr + " | " + yr + " | " + zr +
             " XYZ scale: " + xs + " | " + ys + " | " + zs
@@ -149,7 +197,7 @@ public class createAnimations : MonoBehaviour
                     && objects[i].key[j + 1].frameNum > curFrame)
                 {
                     preFrame = j;
-                    postFrame = j+1;
+                    postFrame = j + 1;
                     break;
                 }
             }
@@ -173,13 +221,13 @@ public class createAnimations : MonoBehaviour
             double ys = objects[i].key[preFrame].scale.y + (objects[i].key[postFrame].scale.y - objects[i].key[preFrame].scale.y) * progressRatio;
             double zs = objects[i].key[preFrame].scale.y + (objects[i].key[postFrame].scale.z - objects[i].key[preFrame].scale.z) * progressRatio;
 
-                Debug.Log("The intended values from file: " +
-                " Object ID: " + objects[i].objectID +
-                " Frame number: " + curFrame +
-                " XYZ position: " + x + " | " + y + " | " + z +
-                " XYZ rotation: " + xr + " | " + yr + " | " + zr +
-                " XYZ scale: " + xs + " | " + ys + " | " + zs
-                );
+            Debug.Log("The intended values from file: " +
+            " Object ID: " + objects[i].objectID +
+            " Frame number: " + curFrame +
+            " XYZ position: " + x + " | " + y + " | " + z +
+            " XYZ rotation: " + xr + " | " + yr + " | " + zr +
+            " XYZ scale: " + xs + " | " + ys + " | " + zs
+            );
 
         }
         else
@@ -254,6 +302,7 @@ public class createAnimations : MonoBehaviour
                     objects[obCount].events = emptyList;
                     objects[obCount].objectID = number; // record item ID
                     objects[obCount].fileName = Data[i + 2];
+                    objects[obCount].animationNum = Int32.Parse(Data[i + 4]);
                     objects[obCount].keyCount = 0;
                     i = i + 1;
                 }
@@ -297,7 +346,7 @@ public class createAnimations : MonoBehaviour
                 int.TryParse(Data[i + 1], out var objectID);
                 string eventName = Data[i + 2];
                 int.TryParse(Data[i + 3], out var frameNum);
-                
+
 
                 events = events.Concat(emptyList).ToArray(); //Increase array size by 1
 
@@ -387,16 +436,16 @@ public class createAnimations : MonoBehaviour
             if (i == 0) // If it is the first keyframe
             {
                 hasLeft = false;
-                intangent = 0; 
+                intangent = 0;
             }
 
             if (i == curve.keys.Length - 1) // if last keyframe
             {
                 hasRight = false;
-                outtangent = 0; 
+                outtangent = 0;
             }
 
-            if (hasLeft) 
+            if (hasLeft)
             {
                 x1 = curve.keys[i - 1].time;
                 x2 = curve.keys[i].time;
@@ -409,9 +458,9 @@ public class createAnimations : MonoBehaviour
             if (hasRight)
             {
                 x1 = curve.keys[i].time;
-                x2 = curve.keys[i+1].time;
+                x2 = curve.keys[i + 1].time;
                 y1 = curve.keys[i].value;
-                y2 = curve.keys[i+1].value;
+                y2 = curve.keys[i + 1].value;
                 deltaX = x2 - x1;
                 deltaY = y2 - y1;
                 outtangent = deltaY / deltaX;
@@ -459,7 +508,7 @@ public class createAnimations : MonoBehaviour
             {
                 //keyframe constructor parameters = keyframe(time(s),the thing you name)
                 //60 frames per second.  The first field is in seconds.  Therefore divide by 60.
-                
+
                 //XYZ
                 keyframeX[j] = new Keyframe(objects[i].key[j].frameNum / speed, objects[i].key[j].vector.x);
                 keyframeY[j] = new Keyframe(objects[i].key[j].frameNum / speed, objects[i].key[j].vector.y);
@@ -496,7 +545,7 @@ public class createAnimations : MonoBehaviour
             //Change Visibility functions
             instance.AddComponent<ChangeVisibility>(); // add script
             //Hide when finished
-            evnt.time = objects[i].key[objects[i].keyCount - 1].frameNum/speed;
+            evnt.time = objects[i].key[objects[i].keyCount - 1].frameNum / speed;
             evnt.functionName = "HideEvent";
             clip.AddEvent(evnt);                   // add event for script
             //Hide when created
@@ -506,24 +555,26 @@ public class createAnimations : MonoBehaviour
             }
             //Unhide when first frame
             evnt.time = objects[i].key[0].frameNum / speed;
-                evnt.functionName = "UnhideEvent";
-                clip.AddEvent(evnt);                   // add event for script
+            evnt.functionName = "UnhideEvent";
+            clip.AddEvent(evnt);                   // add event for script
 
             //Creative Feature *************************************
             //Dynamically add any more events specified
             for (int j = 0; j < objects[i].eventCount; j++)
             {
-                if(j == 0)
+                if (j == 0)
                 {
                     instance.AddComponent<customEvent>(); // add script only once
                 }
                 evnt.functionName = objects[i].events[j].eventName;
-                evnt.time = objects[i].events[j].frameNum/speed;
+                evnt.time = objects[i].events[j].frameNum / speed;
                 clip.AddEvent(evnt);
             }
 
             //animation[clip.name].speed = 1f;
-            animation.Play(clip.name);
+            //animation.Play("");
+            //animation.Play(clip.name);
+            Debug.Log(clip.name);
 
             foreach (AnimationState state in animation)
             {
@@ -532,6 +583,10 @@ public class createAnimations : MonoBehaviour
 
         }
     }
+    public void toggleMenu(bool toggle)
+    {
+        isMenu = toggle;
+    }
 }
 public struct eventList
 {
@@ -539,7 +594,7 @@ public struct eventList
     public int objectID;
     public int frameNum;
 }
-    public struct keyFrame
+public struct keyFrame
 {
     public int objectID;
     public int frameNum;
@@ -556,6 +611,7 @@ public struct Object
     public GameObject instance;
     public eventList[] events;
     public int eventCount;
+    public int animationNum;
 };
 
 // update the clip to a change the red color
