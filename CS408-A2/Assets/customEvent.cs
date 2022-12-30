@@ -5,10 +5,33 @@ using UnityEngine;
 //Creative Feature *************************************
 public class customEvent : MonoBehaviour
 {
+    Camera[] allCameras;
     //Insert any custom event here
     void testEvent()
     {
         Debug.Log("Test event worked");
+    }
+    void useThisCamera()
+    {
+        allCameras = FindObjectsOfType<Camera>();
+        //Camera.allCameras(Camera[] cameras);
+        for (int i = 0; i < Camera.allCamerasCount; i++)
+        {
+            allCameras[i].enabled = false;
+        }
+        Debug.Log("length of cemra array" + allCameras.Length);
+        this.GetComponent<Camera>().enabled = true;
+    }
+    void playMusic()
+    {
+        if (this.GetComponent<AudioSource>().isPlaying)
+        {
+            this.GetComponent<AudioSource>().Stop();
+        }
+        else
+        {
+            this.GetComponent<AudioSource>().Play();
+        }
     }
     void hideTerrain()
     {
