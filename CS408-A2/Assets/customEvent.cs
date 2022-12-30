@@ -19,7 +19,6 @@ public class customEvent : MonoBehaviour
         {
             allCameras[i].enabled = false;
         }
-        Debug.Log("length of cemra array" + allCameras.Length);
         this.GetComponent<Camera>().enabled = true;
     }
     void playMusic()

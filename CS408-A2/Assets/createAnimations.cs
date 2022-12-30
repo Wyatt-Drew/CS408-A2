@@ -50,7 +50,6 @@ public class createAnimations : MonoBehaviour
         }
 
         int curFrame = Time.frameCount;
-        Debug.Log("Cur" + curFrame + "end" + endFrame);
         if (curFrame >= endFrame)
         {
             isMenu = true;
@@ -283,7 +282,6 @@ public class createAnimations : MonoBehaviour
 
             }
             sr.Close();
-
         }
         for (int u = 0; u < Data.Length; u++)
             Data[u] = Data[u].Trim();
@@ -412,8 +410,6 @@ public class createAnimations : MonoBehaviour
             objects[indexO].events = objects[indexO].events.Concat(emptyList).ToArray(); //Increase array size by 1
             objects[indexO].events[indexK] = events[i];
             //No need to name events in order.  Limit of 1 event per frame per object.
-
-
             objects[indexO].eventCount = objects[indexO].eventCount + 1;
         }
     }
@@ -472,7 +468,6 @@ public class createAnimations : MonoBehaviour
         }
         return curve;
     }
-
 
     public static void CreateAnimations()
     {
@@ -570,17 +565,11 @@ public class createAnimations : MonoBehaviour
                 evnt.time = objects[i].events[j].frameNum / speed;
                 clip.AddEvent(evnt);
             }
-
-            //animation[clip.name].speed = 1f;
-            //animation.Play("");
             //animation.Play(clip.name);
-            Debug.Log(clip.name);
-
             foreach (AnimationState state in animation)
             {
                 state.speed = 1F;
             }
-
         }
     }
     public void toggleMenu(bool toggle)
